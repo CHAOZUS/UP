@@ -7,14 +7,17 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {   
+    
     // Spielobjekt Komponente für die Phsische Berechnung (Bewegung, Gravitation, Beschleunigung etc.)
     public Rigidbody2D rb;
+    public BoxCollider2D boxCollider2d;
     
     // Festlegung der Bewegungsgeschwindigkeit etc. (Public variablen lassen sich während dem Spielablauf im Framework ändern)
     Vector2 movement;
     public float movespeed = 2f;
-    public float jumpVelocity = 20f;
     public Vector2 jumpHeight;
+
+    [SerializeField] public LayerMask platformLayerMask;
 
 
     // Start() wird beim laden der Szene ausgeführt
@@ -33,23 +36,21 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         // Einfache Abfrage eines Inputs 
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
         {   
             // Konsolenausgabe
             Debug.Log("Jump");
 
             // Nach der "Sprungtaste" wird dem Spielerobjekt eine vertikale Beschleunigung zugewiesen
             rb.AddForce(jumpHeight, ForceMode2D.Impulse);
-            //rb.velocity = Vector2.up * jumpVelocity;
+            
         }
     }
 
-    // FixedUpdate() wird nach jeder Physischen Änderung im Spiel aufgerufen (Alle Bewegungen sollten hier definiert werden)
+    // FixedUpdate() wird nach jeder Physischen Änderung im Spiel aufgerufen
     void FixedUpdate()
     {
-        //rb.MovePosition(rb.position + movement * movespeed * Time.fixedDeltaTime);
-        
-        
+
         // horizonztale Spielerbewegung in aktueller Bewegungsrichtung 
         rb.velocity = new Vector2(movement.x * movespeed, rb.velocity.y);
     }
@@ -68,4 +69,19 @@ public class PlayerMovement : MonoBehaviour
             
         }
     }
+
+    // Überprüft ob der Spieler sich auf dem Boden befindet
+    // Wird nach dem Betätigen der Sprungtaste aufgerufen
+    private bool isGrounded()
+    {   
+        float extraHeigth = 0.2f;
+
+        // Definieren einer Box in der Größe der Spieler-"Füße"
+        // Wenn die Box mit einem Platform-Objekt kollidiert wird True-Boolean zurückgegeben
+        RaycastHit2D GroundHit = Physics2D.BoxCast(boxCollider2d.bounds.center, boxCollider2d.bounds.size, 0f, Vector2.down, extraHeigth, platformLayerMask);
+
+        Debug.Log(GroundHit.collider);
+        return GroundHit.collider !=null;
+    }
 }
+
