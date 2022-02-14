@@ -32,15 +32,8 @@ public class PlayerMovement : MonoBehaviour
     // Update() wird nach jedem Frame aufgerufen
     void Update()
     {
-    }
-
-    // FixedUpdate() wird nach jeder Physischen Änderung im Spiel aufgerufen (Alle Bewegungen sollten hier definiert werden)
-    void FixedUpdate()
-    {
-        //rb.MovePosition(rb.position + movement * movespeed * Time.fixedDeltaTime);
-        
         // Einfache Abfrage eines Inputs 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {   
             // Konsolenausgabe
             Debug.Log("Jump");
@@ -49,6 +42,13 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(jumpHeight, ForceMode2D.Impulse);
             //rb.velocity = Vector2.up * jumpVelocity;
         }
+    }
+
+    // FixedUpdate() wird nach jeder Physischen Änderung im Spiel aufgerufen (Alle Bewegungen sollten hier definiert werden)
+    void FixedUpdate()
+    {
+        //rb.MovePosition(rb.position + movement * movespeed * Time.fixedDeltaTime);
+        
         
         // horizonztale Spielerbewegung in aktueller Bewegungsrichtung 
         rb.velocity = new Vector2(movement.x * movespeed, rb.velocity.y);
@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
     // Wird nach einer Kollision mit einem anderen Spielobjekt (Collider) aufgerufen
     void OnCollisionEnter2D(Collision2D col)
     {
-        Debug.Log("Alle Kollisionen");
+        //Debug.Log("Alle Kollisionen");
 
         // Kollision mit bestimmtem Spielobjekt (Tag)
         if (col.gameObject.tag == "Wall")
