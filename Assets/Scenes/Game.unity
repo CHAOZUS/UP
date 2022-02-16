@@ -701,7 +701,9 @@ MonoBehaviour:
   rb: {fileID: 640830007}
   boxCollider2d: {fileID: 640830009}
   movespeed: 3
-  jumpHeight: {x: 0, y: 15}
+  jumpHeigth: 15
+  fallMutplier: 2.5
+  lowJumpMutplier: 2
   platformLayerMask:
     serializedVersion: 2
     m_Bits: 64

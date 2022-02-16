@@ -1,5 +1,7 @@
+// Autor: Cicio
+// Datum: 02.2022
 
-//Definiert die Bewegung und Eingabe des Spielers
+//Definiert alle Bewegungen und Eingaben des Spielerobjekts
 
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +9,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {   
-    
+
     // Spielobjekt Komponente für die Phsische Berechnung (Bewegung, Gravitation, Beschleunigung etc.)
     public Rigidbody2D rb;
     public BoxCollider2D boxCollider2d;
@@ -15,13 +17,20 @@ public class PlayerMovement : MonoBehaviour
     // Festlegung der Bewegungsgeschwindigkeit etc. (Public variablen lassen sich während dem Spielablauf im Framework ändern)
     Vector2 movement;
     public float movespeed = 2f;
-    public Vector2 jumpHeight;
+    [Range(10, 20)]
+    public float jumpHeigth;
+    public float fallMutplier = 2.5f;
+    public float lowJumpMutplier = 2f;
+    float jumpScalar;
 
+
+    // Maske zur kategorisierung von Spielobjekten 
     [SerializeField] public LayerMask platformLayerMask;
 
+    
 
-    // Start() wird beim laden der Szene ausgeführt
     void Start()
+    // Start() wird beim laden der Szene ausgeführt
     {
     
     // Bewegungsrichtung wird in einem 2D-Vektor festgelegt
@@ -31,32 +40,41 @@ public class PlayerMovement : MonoBehaviour
     // Bewegungsrichtung und Geschwindigkeit wird dem Spielobjekt (Spieler) übergeben
     rb.velocity = new Vector2(movement.x * movespeed, 0);
     }
+    
 
-    // Update() wird nach jedem Frame aufgerufen
+
     void Update()
+    // Update() wird nach jedem Frame aufgerufen
     {
         // Einfache Abfrage eines Inputs 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
-        {   
+        if (Input.GetButtonDown("Jump") && isGrounded())
+        {       
             // Konsolenausgabe
             Debug.Log("Jump");
 
             // Nach der "Sprungtaste" wird dem Spielerobjekt eine vertikale Beschleunigung zugewiesen
-            rb.AddForce(jumpHeight, ForceMode2D.Impulse);
+            rb.AddForce(Vector2.up * jumpHeigth, ForceMode2D.Impulse);
+            //rb.velocity = Vector2.up * jumpHeigth;
             
         }
+        betterJump();
     }
+    
 
-    // FixedUpdate() wird nach jeder Physischen Änderung im Spiel aufgerufen
+
     void FixedUpdate()
+    // FixedUpdate() wird nach jeder Physischen Änderung im Spiel aufgerufen
     {
 
         // horizonztale Spielerbewegung in aktueller Bewegungsrichtung 
         rb.velocity = new Vector2(movement.x * movespeed, rb.velocity.y);
     }
 
-    // Wird nach einer Kollision mit einem anderen Spielobjekt (Collider) aufgerufen
+
+
+
     void OnCollisionEnter2D(Collision2D col)
+    // Wird nach einer Kollision mit einem anderen Spielobjekt (Collider) aufgerufen
     {
         //Debug.Log("Alle Kollisionen");
 
@@ -70,9 +88,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private bool isGrounded()
     // Überprüft ob der Spieler sich auf dem Boden befindet
     // Wird nach dem Betätigen der Sprungtaste aufgerufen
-    private bool isGrounded()
     {   
         float extraHeigth = 0.2f;
 
@@ -83,5 +101,25 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log(GroundHit.collider);
         return GroundHit.collider !=null;
     }
+
+    void betterJump()
+    // Sorgt für ein besseres Spielgefühl wenn der Spieler springt
+    // Bei einem kurzen betätigen der Sprungtaste fällt der Spieler wieder schneller auf den Boden (Gravitation erhöht)
+    // Bei dem Halten der Spruntaste befindet sich der Spieler länger in der Luft (Gravitation verringert)
+    {
+        if (rb.velocity.y < 0)
+        {
+            jumpScalar = Physics2D.gravity.y * (fallMutplier - 1);
+            rb.velocity += Vector2.up * jumpScalar * Time.deltaTime;
+
+        }else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
+        {
+            jumpScalar = Physics2D.gravity.y * (lowJumpMutplier - 1);
+            rb.velocity += Vector2.up * jumpScalar * Time.deltaTime;
+        }
+    }
 }
+
+
+
 
