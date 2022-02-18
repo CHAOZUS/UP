@@ -27,7 +27,10 @@ public class PlayerMovement : MonoBehaviour
     // Maske zur kategorisierung von Spielobjekten 
     [SerializeField] public LayerMask platformLayerMask;
 
-    
+    // Variblen für den Richtungswechsel nach Berührung der Wand
+    public float contactThreshold = 30f; 
+
+
 
     void Start()
     // Start() wird beim laden der Szene ausgeführt
@@ -68,6 +71,9 @@ public class PlayerMovement : MonoBehaviour
 
         // horizonztale Spielerbewegung in aktueller Bewegungsrichtung 
         rb.velocity = new Vector2(movement.x * movespeed, rb.velocity.y);
+
+        //
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
 
@@ -75,17 +81,23 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     // Wird nach einer Kollision mit einem anderen Spielobjekt (Collider) aufgerufen
+    // Sorgt dafür dass der Spieler nach treffen der Wand die Bewegungsrichtung ändert
     {
-        //Debug.Log("Alle Kollisionen");
+            // Überprüfe die Kontaktpuntke des Spielerobkekts bei einer Kollision
+            for (int k = 0; k < col.contacts.Length; k++)
+            {   
+                // Nur bei Kollision von links oder rechts wird die if-schleife true
+                if (Vector2.Angle(col.contacts[k].normal, Vector2.right) <= contactThreshold || Vector2.Angle(col.contacts[k].normal, Vector2.left) <= contactThreshold)
+                {
+                    Debug.Log("WAND");
+                    // Ändern der Bewegungsrichtung (nach Treffer mit der Wand)
+                    movement.x = movement.x * -1;   
+                    break;
 
-        // Kollision mit bestimmtem Spielobjekt (Tag)
-        if (col.gameObject.tag == "Wall")
-        {   
-            Debug.Log("WAAAAND");
-            // Ändern der Bewegungsrichtung (nach Treffer mit der Wand)
-            movement.x = movement.x * -1;
-            
-        }
+                }
+
+            }
+        
     }
 
     private bool isGrounded()
