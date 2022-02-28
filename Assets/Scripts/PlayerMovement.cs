@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] public LayerMask platformLayerMask;
 
     // Variblen für den Richtungswechsel nach Berührung der Wand
-    public float contactThreshold = 30f; 
+    public float contactThreshold = 1f; 
 
 
 
