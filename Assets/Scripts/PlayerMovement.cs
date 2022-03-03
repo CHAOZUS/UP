@@ -23,12 +23,14 @@ public class PlayerMovement : MonoBehaviour
     public float lowJumpMutplier = 2f;
     float jumpScalar;
 
-
     // Maske zur kategorisierung von Spielobjekten 
     [SerializeField] public LayerMask platformLayerMask;
 
     // Variblen für den Richtungswechsel nach Berührung der Wand
-    public float contactThreshold = 1f; 
+    public float contactThreshold = 1f;
+
+    // Verknüpfung und Kontrolle über Animationen
+    public Animator animator;
 
 
 
@@ -61,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
             
         }
         betterJump();
+
     }
     
 
@@ -72,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
         // horizonztale Spielerbewegung in aktueller Bewegungsrichtung 
         rb.velocity = new Vector2(movement.x * movespeed, rb.velocity.y);
 
-        //
+        // Verhindern das sich das Spielerobjekt ins einer Achse dreht 
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
@@ -91,8 +94,12 @@ public class PlayerMovement : MonoBehaviour
                 {
                     Debug.Log("WAND");
                     // Ändern der Bewegungsrichtung (nach Treffer mit der Wand)
-                    movement.x = movement.x * -1;   
+                    movement.x = movement.x * -1;
+
+                    // Änderung des Parameters für die Animationsbedingungen (Laufanimation-Rechts -> Laufanimation-links vv.)
+                    animator.SetFloat("Bewegungsrichtung", movement.x);
                     break;
+                    
 
                 }
 
