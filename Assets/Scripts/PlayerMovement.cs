@@ -9,7 +9,7 @@
  *      - Objekt erhält vertikalen Beschleunigungs-Vektor bei Nutzereingabe (Touch o. Space-Taste)
  *          - Die Nutzereingabe erfolgt nur wenn das Spielerobjekt auf einer Plattform steht
  *          - Der vertikale Beschleunigungs-Vektor unterscheidet sich bei der länge der Nutzereingabe (Halten -> Objekt ist länger in der Luft)
- *      - Verknüpfung mit Animator und Animations-Bedingungen (Animation-Parameters) 
+ *      - Verknüpfung mit Unity-Animator und Animations-Bedingungen (Animation-Parameters) 
  */          
 
 using System.Collections;
