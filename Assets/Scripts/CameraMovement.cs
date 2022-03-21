@@ -1,7 +1,7 @@
 // Autor: Cicio
 // Datum: 03.2022
 
-// Definiert dass die Kamera stets dem Spieler folgt (nur in Y-Richtung)
+// CameraMovement.cs - Definiert dass die Kamera stets dem Spieler folgt (nur in Y-Richtung)
 // Zusatz: Die Kamera folgt nun den Spieler erst aber einer gewissen Höhe
 // + die Kamerabewegung wird durch einen zusätzlichen Vector "sanfter" gemacht
 

@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
     // Update() wird nach jedem Frame aufgerufen
     {
         // Einfache Abfrage eines Inputs 
-        if (Input.GetButtonDown("Jump") && isGrounded())
+        if (Input.GetButtonDown("Jump") && isGrounded() && !GameUI.isPaused)
         {
             // Konsolenausgabe
             Debug.Log("Jump");

@@ -339,6 +339,7 @@
 /define:UNITY_STANDALONE_WIN
 /define:UNITY_TEAM_LICENSE
 /define:USE_SEARCH_ENGINE_API
+Assets\GameUI.cs
 Assets\MainMenu.cs
 Assets\Scripts\CameraMovement.cs
 Assets\Scripts\PlayerMovement.cs
