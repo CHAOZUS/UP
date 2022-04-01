@@ -26,12 +26,13 @@ public class PlayerMovement : MonoBehaviour
     // Festlegung der Variablen für Bewegungsgeschwindigkeit, Sprunghöhe etc. 
     // (Note: Public variablen lassen sich während dem Spielablauf im Framework ändern)
     Vector2 movement;
-    public float movespeed = 2f;
+    public static float movespeed = 2f;
     [Range(10, 20)]
     public float jumpHeigth;
     public float fallMutplier = 2.5f;
     public float lowJumpMutplier = 2f;
     float jumpScalar;
+    public float extraHeigth = 0.2f;
 
     // Maske zur kategorisierung von Spielobjekten 
     [SerializeField] public LayerMask platformLayerMask;
@@ -62,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
     // Update() wird nach jedem Frame aufgerufen
     {
         // Einfache Abfrage eines Inputs 
+        // notiz: Input.GetMouseButton(0)
         if (Input.GetButtonDown("Jump") && isGrounded() && !GameUI.isPaused)
         {
             // Konsolenausgabe
@@ -93,22 +95,24 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     // Wird nach einer Kollision mit einem anderen Spielobjekt (Collider) aufgerufen
-    // Sorgt dafür dass der Spieler nach treffen der Wand die Bewegungsrichtung ändert
+    // Sorgt unteranderem dafür dass der Spieler nach treffen der Wand die Bewegungsrichtung ändert
     {
-        // Überprüfe die Kontaktpuntke des Spielerobkekts bei einer Kollision
+        // Überprüfe die Kontaktpuntke des Spielerobjekts bei einer Kollision
         for (int k = 0; k < col.contacts.Length; k++)
         {
             // Nur bei Kollision von links oder rechts wird die if-schleife true
             if (Vector2.Angle(col.contacts[k].normal, Vector2.right) <= contactThreshold || Vector2.Angle(col.contacts[k].normal, Vector2.left) <= contactThreshold)
-            {
-                Debug.Log("WAND");
-                // Ändern der Bewegungsrichtung (nach Treffer mit der Wand)
-                movement.x = movement.x * -1;
+            {       
+                    // Und nur bei Kollision mit Wand Objekten (Spezifiert durch den Tag "Wall")
+                    if (col.gameObject.tag == "Wall") { 
+                        Debug.Log("WAND");
+                    // Ändern der Bewegungsrichtung (nach Treffer mit der Wand)
+                    movement.x = movement.x * -1;
 
-                // Änderung des Parameters für die Animationsbedingungen (Laufanimation-Rechts -> Laufanimation-links vv.)
-                animator.SetFloat("Bewegungsrichtung", movement.x);
-                break;
-
+                    // Änderung des Parameters für die Animationsbedingungen (Laufanimation-Rechts -> Laufanimation-links vv.)
+                    animator.SetFloat("Bewegungsrichtung", movement.x);
+                    break;
+                }
             }
         }
 
@@ -124,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
     // Überprüft ob der Spieler sich auf dem Boden befindet
     // Wird nach dem Betätigen der Sprungtaste aufgerufen
     {
-        float extraHeigth = 0.2f;
+
 
         // Definieren einer Box in der Größe der Spieler-"Füße"
         // Wenn die Box mit einem Platform-Objekt kollidiert wird True-Boolean zurückgegeben

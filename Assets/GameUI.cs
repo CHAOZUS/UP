@@ -2,7 +2,7 @@
 // Datum: 03.2022
 
 // GameUI.cs - Definiert die Funktion des UI während des Spiels
-//            zBsp.: der Pause-Button und Screen 
+//            zBsp.: der Pause-Button und Pause-Screen 
 
 
 using System.Collections;
@@ -14,16 +14,23 @@ public class GameUI : MonoBehaviour
 {
     public GameObject PauseMenu;
     public static bool isPaused;
+    public static int selectedLvl;
+    
+    
     void Start()
     {
         PauseMenu.SetActive(false);
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         
     }
+
+
+
+
     public void PauseGame()
     {
         Time.timeScale = 0f;
@@ -40,5 +47,15 @@ public class GameUI : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
+        isPaused = false;
+    }
+
+    public void RetryGame()
+    {
+        isPaused = false;
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(1);
+        // if level selection = 1 then make level active
+
     }
 }
