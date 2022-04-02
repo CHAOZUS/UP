@@ -14,12 +14,25 @@ public class GameUI : MonoBehaviour
 {
     public GameObject PauseMenu;
     public static bool isPaused;
+
     public static int selectedLvl;
+    public GameObject[] levels;
+
     
     
     void Start()
     {
+        Debug.Log(selectedLvl);
         PauseMenu.SetActive(false);
+
+
+        // Bei Start der Szene werden alle Level (bis auf das ausgewählte) ausgeblendet / deaktiviert.
+        foreach (GameObject level in levels)
+        {
+            level.SetActive(false);
+        }
+        levels[selectedLvl].SetActive(true);
+        
     }
 
 
@@ -56,6 +69,16 @@ public class GameUI : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene(1);
         // if level selection = 1 then make level active
+
+    }
+    public void NextLevel()
+    {
+        isPaused = false;
+        Time.timeScale = 1f;
+
+        SceneManager.LoadScene(1);
+        GameUI.selectedLvl = selectedLvl + 1;
+
 
     }
 }

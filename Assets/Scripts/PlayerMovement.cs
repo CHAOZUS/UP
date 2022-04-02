@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded() && !GameUI.isPaused)
         {
             // Konsolenausgabe
-            Debug.Log("Jump");
+            //Debug.Log("Jump");
 
             // Nach der "Sprungtaste" wird dem Spielerobjekt eine vertikale Beschleunigung zugewiesen
             rb.AddForce(Vector2.up * jumpHeigth, ForceMode2D.Impulse);
@@ -105,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
             {       
                     // Und nur bei Kollision mit Wand Objekten (Spezifiert durch den Tag "Wall")
                     if (col.gameObject.tag == "Wall") { 
-                        Debug.Log("WAND");
+                        //Debug.Log("WAND");
                     // Ändern der Bewegungsrichtung (nach Treffer mit der Wand)
                     movement.x = movement.x * -1;
 
@@ -134,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
         // Wenn die Box mit einem Platform-Objekt kollidiert wird True-Boolean zurückgegeben
         RaycastHit2D GroundHit = Physics2D.BoxCast(boxCollider2d.bounds.center, boxCollider2d.bounds.size, 0f, Vector2.down, extraHeigth, platformLayerMask);
 
-        Debug.Log(GroundHit.collider);
+        //Debug.Log(GroundHit.collider);
         return GroundHit.collider != null;
     }
 
