@@ -64,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Einfache Abfrage eines Inputs 
         // notiz: Input.GetMouseButton(0)
-        if (Input.GetButtonDown("Jump") && isGrounded() && !GameUI.isPaused)
+        if (Input.GetMouseButtonDown(0) && isGrounded() && !GameUI.isPaused)
         {
             // Konsolenausgabe
             //Debug.Log("Jump");
@@ -149,8 +149,9 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity += Vector2.up * jumpScalar * Time.deltaTime;
 
         }
-        else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
+        else if (rb.velocity.y > 0 && !Input.GetMouseButton(0))
         {
+            //!Input.GetButton("Jump")
             jumpScalar = Physics2D.gravity.y * (lowJumpMutplier - 1);
             rb.velocity += Vector2.up * jumpScalar * Time.deltaTime;
         }

@@ -5,6 +5,7 @@ ScriptsOnlyBuild:
     - GameUI
     - MainMenu
     - PlayerMovement
+    - victory
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
@@ -48,6 +49,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.Slider
   sceneClasses:
     Assets/Scenes/Game.unity:
     - Class: 1
@@ -97,10 +99,14 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3530}
     - Class: 114
-      Script: {instanceID: 4762}
+      Script: {instanceID: 3724}
     - Class: 114
-      Script: {instanceID: 17804}
+      Script: {instanceID: 4764}
+    - Class: 114
+      Script: {instanceID: 5744}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
@@ -140,6 +146,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1506}
     - Class: 114
+      Script: {instanceID: 1764}
+    - Class: 114
       Script: {instanceID: 1888}
     - Class: 114
       Script: {instanceID: 2294}
@@ -158,11 +166,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3530}
     - Class: 114
-      Script: {instanceID: 4762}
+      Script: {instanceID: 4764}
     - Class: 114
-      Script: {instanceID: 4922}
+      Script: {instanceID: 4924}
     - Class: 114
-      Script: {instanceID: 5324}
+      Script: {instanceID: 5326}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -350,7 +358,7 @@ ScriptsOnlyBuild:
     className: IKManager2D
   - hash:
       serializedVersion: 2
-      Hash: ffd79957c03dfb110aa5f88119ee16cd
+      Hash: eaf214ffeb7c4020a30e7340e3134668
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerMovement
@@ -540,6 +548,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TextContainer
+  - hash:
+      serializedVersion: 2
+      Hash: 6f03cc597088f411178558797607bd92
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GameUI
   - hash:
       serializedVersion: 2
       Hash: bd3f0ca738703903e759f77536ed74fd
@@ -896,6 +910,12 @@ ScriptsOnlyBuild:
     className: SignalEmitter
   - hash:
       serializedVersion: 2
+      Hash: 8143ae3d6dce9aff7ae24546f4549e57
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: victory
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -930,14 +950,8 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: TMPro.Examples
     className: TMP_TextEventCheck
-  - hash:
-      serializedVersion: 2
-      Hash: 7fb33bf5681fd9d4a816950cf7f7ea67
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: GameUI
   platform: 13
   scenePathNames:
   - Assets/Scenes/TitleScreen.unity
   - Assets/Scenes/Game.unity
-  playerPath: C:/Main/Uni Zeug/UP!/UP!_buildTest.aab
+  playerPath: C:/Main/Abgabe_v2.aab
